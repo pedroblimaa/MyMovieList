@@ -19,8 +19,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.web.client.RestTemplate;
 
 import com.myMovieList.controller.dto.TokenDto;
@@ -29,6 +29,7 @@ import com.myMovieList.controller.form.FormLogin;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
+@ActiveProfiles("integration-test")
 public class MovieListTest {
 
 	@Autowired
@@ -76,7 +77,7 @@ public class MovieListTest {
 
 		ResponseEntity<String> response = testRestTemplate.exchange("/movie-list", HttpMethod.GET, request,
 				String.class);
-		
+
 		assertFalse(response.getBody().contains("Movie 1"));
 		assertTrue(response.getBody().contains("[]"));
 	}
@@ -102,7 +103,6 @@ public class MovieListTest {
 		assertTrue(response.getPrivateList());
 	}
 
-	@Sql("/test.sql")
 	@Test
 	public void shouldReturnFalse_WhenTryToRemoveTheListPrivate() throws JSONException {
 
@@ -131,6 +131,8 @@ public class MovieListTest {
 		HttpEntity<FormLogin> request = new HttpEntity<>(userLogin, headers);
 
 		ResponseEntity<TokenDto> response = testRestTemplate.postForEntity("/auth", request, TokenDto.class);
+
+		System.out.println(response);
 
 		String token = response.getBody().getType() + " " + response.getBody().getToken();
 

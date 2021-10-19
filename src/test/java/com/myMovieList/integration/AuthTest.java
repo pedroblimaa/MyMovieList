@@ -11,8 +11,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.controller.dto.TokenDto;
@@ -20,6 +20,7 @@ import com.myMovieList.controller.form.FormLogin;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
+@ActiveProfiles("dev")
 public class AuthTest {
 
 	@Autowired
@@ -41,7 +42,6 @@ public class AuthTest {
 		assertEquals("Invalid Credentials!", response.getBody().getMessage());
 	}
 
-	@Sql("/test.sql")
 	@Test
 	void shouldGetTokenWhenTryToLogInSuccefull() {
 

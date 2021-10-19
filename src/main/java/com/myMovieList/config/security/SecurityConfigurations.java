@@ -19,7 +19,7 @@ import com.myMovieList.repository.UserRepository;
 
 @EnableWebSecurity
 @Configuration
-@Profile(value = {"dev", "prod"})
+@Profile(value = {"dev", "prod", "integration-test"})
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 
 	@Autowired
