@@ -34,8 +34,9 @@ public class Movie {
 		this.vote_count = movieApi.getVote_count();
 	}
 
-	public Movie(String name, String overview, String language, String releaseDate) {
+	public Movie(Integer id, String name, String overview, String language, String releaseDate) {
 		super();
+		this.id = (long) id;
 		this.name = name;
 		this.overview = overview;
 		this.language = language;

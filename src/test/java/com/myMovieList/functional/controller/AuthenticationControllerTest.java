@@ -3,6 +3,7 @@ package com.myMovieList.functional.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,13 @@ class AuthenticationControllerTest {
 
 		String json = "{" + "\"email\": \"aluno@email.com\"," + "\"senha\": \"123456\"" + "}";
 		
+		JSONObject jsonResponse = new JSONObject();
+		jsonResponse.put("code", 400);
+		jsonResponse.put("message", "Invalid Credentials!");
+		
 		mockMvc.perform(MockMvcRequestBuilders.post(uri).content(json).contentType(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().is(400));
+				.andExpect(MockMvcResultMatchers.status().is(400))
+				.andExpect(MockMvcResultMatchers.content().json(jsonResponse.toString()));
 	}
 
 }

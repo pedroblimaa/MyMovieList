@@ -94,7 +94,7 @@ public class MovieService {
 	public List<Movie> deleteMovie(Long id, User user) {
 
 		List<Movie> movies = user.getMovies();
-
+		
 		for (int i = 0; i < movies.size(); i++) {
 			if (movies.get(i).getId().equals(id)) {
 				movies.remove(i);
@@ -105,24 +105,4 @@ public class MovieService {
 
 		return movies;
 	}
-
-//	@Transactional
-//	public Page<Movie> formattMovies(Page<Movies> movies, Pageable pagination, Long userId) {
-//		
-//		List<Movie> moviesList = new ArrayList<>();
-//		
-//		if(movies.getContent().contains(null)) {
-//			User user = userRepo.getById(userId);
-//			
-//			user.setMovies(moviesList);
-//			
-//			return new PageImpl<>(moviesList, pagination, moviesList.size());
-//		}
-//		
-//		for (Movies movie : movies.getContent()) {
-//			moviesList.add(movie.getMovies());
-//		}
-//		 
-//		return new PageImpl<>(moviesList, pagination, moviesList.size());
-//	}
 }

@@ -124,7 +124,7 @@ public class MovieListController {
 	public ResponseEntity<?> deleteMovie(@RequestBody @Valid MovieIdDto form, HttpServletRequest request) {
 
 		User user = loggingService.getUserByRequest(request);
-
+		
 		List<Movie> movies = movieService.deleteMovie(form.getId(), user);
 
 		return ResponseEntity.ok(movies);

@@ -46,7 +46,7 @@ public class MovieListTest {
 	}
 
 	@Test
-	public void shouldListTwoMoviesWhenRequestedTheFirstUser() {
+	public void shouldListTwoMovies_WhenRequestedTheFirstUser() {
 
 		headers = new HttpHeaders();
 
@@ -64,7 +64,7 @@ public class MovieListTest {
 	}
 
 	@Test
-	public void shouldListEmptyMoviesWhenRequestedTheSecondUser() {
+	public void shouldListEmptyMovies_WhenRequestedTheSecondUser() {
 
 		headers = new HttpHeaders();
 
@@ -82,7 +82,7 @@ public class MovieListTest {
 	}
 
 	@Test
-	public void shouldReturnTrueWhenTryToPutTheListPrivate() throws JSONException {
+	public void shouldReturnTrue_WhenTryToPutTheListPrivate() throws JSONException {
 
 		headers = new HttpHeaders();
 
@@ -104,7 +104,7 @@ public class MovieListTest {
 
 	@Sql("/test.sql")
 	@Test
-	public void shouldReturnFalseWhenTryToRemoveTheListPrivate() throws JSONException {
+	public void shouldReturnFalse_WhenTryToRemoveTheListPrivate() throws JSONException {
 
 		headers = new HttpHeaders();
 

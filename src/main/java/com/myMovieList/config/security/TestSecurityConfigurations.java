@@ -13,23 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.myMovieList.repository.UserRepository;
 
 @EnableWebSecurity
 @Configuration
-@Profile(value = {"dev", "prod"})
-public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
+@Profile("test")
+public class TestSecurityConfigurations extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private AuthenticationService autenticacaoService;
-	
-	@Autowired
-	private TokenService tokenService;
-	
-	@Autowired
-	private UserRepository usuarioRepository;
 	
 	@Override
 	@Bean
@@ -46,25 +37,12 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
-		.antMatchers(HttpMethod.GET, "/movie-list/user").permitAll()
-		.antMatchers(HttpMethod.GET, "/h2-console/*").permitAll()
-		.anyRequest().authenticated()
+		.antMatchers(HttpMethod.GET, "/**").permitAll()
 		.and().csrf().disable()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new TokenAuthentication(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(AUTH_WHITELIST);
 	}
-
-	private static final String[] AUTH_WHITELIST = {
-			"/**.html", 
-			"/v2/api-docs", 
-			"/webjars/**", 
-			"/configuration/**",
-			"/swagger-resources/**",
-			"/swagger-ui/**"
-	};
 }

@@ -122,7 +122,7 @@ class MovieServiceTest {
 		HttpServletRequest mockedRequest = Mockito.mock(HttpServletRequest.class);
 
 		User user = createUser();
-		Movie movie = new Movie("Movie 3", "This is the 3rd movie", "en", "2021-01-03");
+		Movie movie = new Movie(3, "Movie 3", "This is the 3rd movie", "en", "2021-01-03");
 
 		loggingService = Mockito.mock(LoggingService.class);
 		userRepo = Mockito.mock(UserRepository.class);
@@ -141,7 +141,7 @@ class MovieServiceTest {
 	void shouldThrowAnException_WhenAUserIsNotLogged() {
 		HttpServletRequest mockedRequest = Mockito.mock(HttpServletRequest.class);
 
-		Movie movie = new Movie("Movie 3", "This is the 3rd movie", "en", "2021-01-03");
+		Movie movie = new Movie(3, "Movie 3", "This is the 3rd movie", "en", "2021-01-03");
 
 		loggingService = Mockito.mock(LoggingService.class);
 		userRepo = Mockito.mock(UserRepository.class);
@@ -160,8 +160,8 @@ class MovieServiceTest {
 
 		List<Movie> movies = new ArrayList<>();
 
-		movies.add(new Movie("Movie 1", "This is a new Movie 1", "en", "2020-12-09"));
-		movies.add(new Movie("Movie 2", "This is a new Movie 2", "en", "2020-08-20"));
+		movies.add(new Movie(1, "Movie 1", "This is a new Movie 1", "en", "2020-12-09"));
+		movies.add(new Movie(2, "Movie 2", "This is a new Movie 2", "en", "2020-08-20"));
 
 		User user = new User((long) 1, "Mod", "mod@mail.com", movies, true);
 
