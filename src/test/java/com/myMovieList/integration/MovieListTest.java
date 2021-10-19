@@ -76,9 +76,9 @@ public class MovieListTest {
 
 		ResponseEntity<String> response = testRestTemplate.exchange("/movie-list", HttpMethod.GET, request,
 				String.class);
-
+		
 		assertFalse(response.getBody().contains("Movie 1"));
-		assertTrue(response.getBody().contains("[null]"));
+		assertTrue(response.getBody().contains("[]"));
 	}
 
 	@Test
