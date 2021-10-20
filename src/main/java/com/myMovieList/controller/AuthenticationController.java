@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.config.security.TokenService;
+import com.myMovieList.controller.dto.LoginDto;
 import com.myMovieList.controller.dto.TokenDto;
-import com.myMovieList.controller.form.FormLogin;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,7 +30,7 @@ public class AuthenticationController {
 	private TokenService tokenService;
 
 	@PostMapping
-	public ResponseEntity<?> authenticate(@RequestBody @Valid FormLogin form) {
+	public ResponseEntity<?> authenticate(@RequestBody @Valid LoginDto form) {
 
 		UsernamePasswordAuthenticationToken loginData = new UsernamePasswordAuthenticationToken(form.getEmail(),
 				form.getPassword());

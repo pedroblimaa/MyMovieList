@@ -1,6 +1,6 @@
-package com.myMovieList.controller.form;
+package com.myMovieList.controller.dto;
 
-public class FormPrivateList {
+public class PrivateListDto {
 
 	private Boolean privateList;
 

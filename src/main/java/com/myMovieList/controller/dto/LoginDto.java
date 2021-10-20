@@ -1,11 +1,11 @@
-package com.myMovieList.controller.form;
+package com.myMovieList.controller.dto;
 
-public class FormLogin {
+public class LoginDto {
 
 	private String email;
 	private String password;
 
-	public FormLogin(String email, String password) {
+	public LoginDto(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;

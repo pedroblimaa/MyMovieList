@@ -27,8 +27,8 @@ import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.config.exception.HandledException;
 import com.myMovieList.controller.dto.MovieApiDto;
 import com.myMovieList.controller.dto.MovieIdDto;
+import com.myMovieList.controller.dto.PrivateListDto;
 import com.myMovieList.controller.dto.UserDto;
-import com.myMovieList.controller.form.FormPrivateList;
 import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
 import com.myMovieList.repository.MovieRepository;
@@ -110,7 +110,7 @@ public class MovieListController {
 
 	@PatchMapping("/private-list")
 	@Transactional
-	public ResponseEntity<?> setPrivateList(HttpServletRequest request, @RequestBody FormPrivateList form) {
+	public ResponseEntity<?> setPrivateList(HttpServletRequest request, @RequestBody PrivateListDto form) {
 
 		User user = loggingService.getUserByRequest(request);
 

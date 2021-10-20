@@ -15,8 +15,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
+import com.myMovieList.controller.dto.LoginDto;
 import com.myMovieList.controller.dto.TokenDto;
-import com.myMovieList.controller.form.FormLogin;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -31,9 +31,9 @@ public class AuthTest {
 
 		HttpHeaders headers = new HttpHeaders();
 
-		FormLogin userLogin = new FormLogin("dontexist@email.com", "123456");
+		LoginDto userLogin = new LoginDto("dontexist@email.com", "123456");
 
-		HttpEntity<FormLogin> request = new HttpEntity<>(userLogin, headers);
+		HttpEntity<LoginDto> request = new HttpEntity<>(userLogin, headers);
 
 		ResponseEntity<ErrorHandleDto> response = testRestTemplate.postForEntity("/auth", request,
 				ErrorHandleDto.class);
@@ -47,9 +47,9 @@ public class AuthTest {
 
 		HttpHeaders headers = new HttpHeaders();
 
-		FormLogin userLogin = new FormLogin("mod@mail.com", "123456");
+		LoginDto userLogin = new LoginDto("mod@mail.com", "123456");
 
-		HttpEntity<FormLogin> request = new HttpEntity<>(userLogin, headers);
+		HttpEntity<LoginDto> request = new HttpEntity<>(userLogin, headers);
 
 		ResponseEntity<TokenDto> response = testRestTemplate.postForEntity("/auth", request, TokenDto.class);
 
