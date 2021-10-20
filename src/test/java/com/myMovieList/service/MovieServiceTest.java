@@ -34,7 +34,7 @@ class MovieServiceTest {
 
 	private UserRepository userRepo;
 
-	private LoggingService loggingService;
+	private AuthService loggingService;
 
 	@Test
 	void shouldReturnANewMovie_WhenTheMovieDoesntExist() {
@@ -75,7 +75,7 @@ class MovieServiceTest {
 
 		User user = createUser();
 
-		loggingService = Mockito.mock(LoggingService.class);
+		loggingService = Mockito.mock(AuthService.class);
 		userRepo = Mockito.mock(UserRepository.class);
 
 		MovieService movieService = new MovieService(loggingService, userRepo);
@@ -100,7 +100,7 @@ class MovieServiceTest {
 
 		User user = createUser();
 
-		loggingService = Mockito.mock(LoggingService.class);
+		loggingService = Mockito.mock(AuthService.class);
 		userRepo = Mockito.mock(UserRepository.class);
 
 		MovieService movieService = new MovieService(loggingService, userRepo);
@@ -124,7 +124,7 @@ class MovieServiceTest {
 		User user = createUser();
 		Movie movie = new Movie(3, "Movie 3", "This is the 3rd movie", "en", "2021-01-03");
 
-		loggingService = Mockito.mock(LoggingService.class);
+		loggingService = Mockito.mock(AuthService.class);
 		userRepo = Mockito.mock(UserRepository.class);
 
 		MovieService movieService = new MovieService(loggingService, userRepo);
@@ -143,7 +143,7 @@ class MovieServiceTest {
 
 		Movie movie = new Movie(3, "Movie 3", "This is the 3rd movie", "en", "2021-01-03");
 
-		loggingService = Mockito.mock(LoggingService.class);
+		loggingService = Mockito.mock(AuthService.class);
 		userRepo = Mockito.mock(UserRepository.class);
 
 		MovieService movieService = new MovieService(loggingService, userRepo);

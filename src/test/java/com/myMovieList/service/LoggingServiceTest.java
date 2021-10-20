@@ -27,7 +27,7 @@ class LoggingServiceTest {
 				type + " " + token);
 		Mockito.when(tokenService.getUserId(Mockito.anyString())).thenReturn((long) 1);
 		
-		LoggingService loggingService = new LoggingService(tokenService);
+		AuthService loggingService = new AuthService(tokenService);
 		
 		Long loggedUserId = loggingService.getLoggedUserId(mockedRequest);
 		

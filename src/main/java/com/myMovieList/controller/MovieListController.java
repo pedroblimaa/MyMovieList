@@ -33,7 +33,7 @@ import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
 import com.myMovieList.repository.MovieRepository;
 import com.myMovieList.repository.UserRepository;
-import com.myMovieList.service.LoggingService;
+import com.myMovieList.service.AuthService;
 import com.myMovieList.service.MovieApiService;
 import com.myMovieList.service.MovieService;
 
@@ -42,7 +42,7 @@ import com.myMovieList.service.MovieService;
 public class MovieListController {
 
 	@Autowired
-	private LoggingService loggingService;
+	private AuthService loggingService;
 
 	@Autowired
 	private UserRepository userRepo;
@@ -57,7 +57,6 @@ public class MovieListController {
 	private MovieService movieService;
 
 	@GetMapping
-	@Transactional
 	public ResponseEntity<?> getList(HttpServletRequest request,
 			@PageableDefault(page = 0, size = 10) Pageable pagination) {
 
@@ -91,7 +90,6 @@ public class MovieListController {
 	}
 
 	@PostMapping
-	@Transactional
 	public ResponseEntity<?> addMovie(@RequestBody @Valid MovieIdDto form, HttpServletRequest request)
 			throws HandledException {
 
@@ -120,7 +118,6 @@ public class MovieListController {
 	}
 
 	@DeleteMapping
-	@Transactional
 	public ResponseEntity<?> deleteMovie(@RequestBody @Valid MovieIdDto form, HttpServletRequest request) {
 
 		User user = loggingService.getUserByRequest(request);

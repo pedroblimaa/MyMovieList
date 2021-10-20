@@ -23,7 +23,7 @@ public class MovieService {
 	private MovieRepository movieRepo;
 
 	@Autowired
-	private LoggingService loggingService;
+	private AuthService loggingService;
 
 	@Autowired
 	private UserRepository userRepo;
@@ -37,7 +37,7 @@ public class MovieService {
 		this.movieRepo = movieRepo;
 	}
 
-	public MovieService(LoggingService loggingService, UserRepository userRepo) {
+	public MovieService(AuthService loggingService, UserRepository userRepo) {
 		super();
 		this.loggingService = loggingService;
 		this.userRepo = userRepo;

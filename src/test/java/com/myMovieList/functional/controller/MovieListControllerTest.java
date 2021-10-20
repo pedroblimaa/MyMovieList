@@ -22,7 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
-import com.myMovieList.service.LoggingService;
+import com.myMovieList.service.AuthService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,7 +30,7 @@ import com.myMovieList.service.LoggingService;
 class MovieListControllerTest {
 
 	@MockBean
-	private LoggingService loggingService;
+	private AuthService loggingService;
 
 	@Autowired
 	private MockMvc mockMvc;

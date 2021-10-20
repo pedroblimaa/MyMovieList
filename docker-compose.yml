@@ -24,6 +24,8 @@ services:
     environment: 
       WAIT_HOSTS: mysql:3306 
       SPRING_PROFILES_ACTIVE: prod 
+      MONGO_DB_PASSWORD: mongodb12358
+      MOVIE_API_KEY: a14d836ba9872e3582094edabf7ff1b0
     depends_on: 
       - "mysql"
 

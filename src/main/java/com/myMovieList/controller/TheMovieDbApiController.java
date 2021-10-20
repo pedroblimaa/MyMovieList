@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.config.exception.HandledException;
 import com.myMovieList.controller.dto.MovieApiPageDto;
+import com.myMovieList.service.LoggingService;
 import com.myMovieList.service.MovieApiService;
 
 @RestController
@@ -28,6 +29,9 @@ public class TheMovieDbApiController {
 
 	@Autowired
 	private MovieApiService apiService;
+	
+	@Autowired
+	private LoggingService loggingService;
 
 	@Cacheable(value = "apiMovies")
 	@GetMapping
@@ -47,7 +51,8 @@ public class TheMovieDbApiController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		log.info(name != null ? "Caching request with name: " + name : "Caching top_rated movies request");
+		String loggingMessage = loggingService.log("INFO", name != null ? "Caching request with name: " + name : "Caching top_rated movies request");
+		log.info(loggingMessage);
 
 		return ResponseEntity.ok(movies.getResults());
 	}
