@@ -1,10 +1,9 @@
 package com.myMovieList.config.dto;
 
 public class ErrorHandleDto {
-	
+
 	private int code;
 	private String message;
-
 
 	public ErrorHandleDto(String message, int code) {
 		super();

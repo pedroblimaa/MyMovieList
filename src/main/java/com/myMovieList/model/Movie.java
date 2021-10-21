@@ -16,8 +16,8 @@ public class Movie {
 	private String overview;
 	private String language;
 	private String releaseDate;
-	private Float vote_average;
-	private Long vote_count;
+	private Float vote_average = (float) 0;
+	private Long vote_count = (long) 0; 
 
 	public Movie() {
 		super();
@@ -30,10 +30,8 @@ public class Movie {
 		this.overview = movieApi.getOverview();
 		this.language = movieApi.getOriginal_language();
 		this.releaseDate = movieApi.getRelease_date();
-		this.vote_average = movieApi.getVote_average();
-		this.vote_count = movieApi.getVote_count();
 	}
-
+	
 	public Movie(Integer id, String name, String overview, String language, String releaseDate) {
 		super();
 		this.id = (long) id;
@@ -54,6 +52,8 @@ public class Movie {
 		this.vote_average = vote_average;
 		this.vote_count = vote_count;
 	}
+
+	
 
 	public Long getId() {
 		return id;
@@ -110,5 +110,4 @@ public class Movie {
 	public void setVote_count(Long vote_count) {
 		this.vote_count = vote_count;
 	}
-
 }

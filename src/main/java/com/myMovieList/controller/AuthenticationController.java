@@ -36,7 +36,6 @@ public class AuthenticationController {
 				form.getPassword());
 
 		try {
-			
 			Authentication authentication = authManager.authenticate(loginData);
 			String token = tokenService.generateToken(authentication);
 

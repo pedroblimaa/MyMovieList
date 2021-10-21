@@ -25,10 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.config.exception.HandledException;
+import com.myMovieList.controller.dto.MovieAddDto;
 import com.myMovieList.controller.dto.MovieApiDto;
-import com.myMovieList.controller.dto.MovieIdDto;
 import com.myMovieList.controller.dto.PrivateListDto;
 import com.myMovieList.controller.dto.UserDto;
+import com.myMovieList.controller.dto.VoteAddDto;
 import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
 import com.myMovieList.repository.MovieRepository;
@@ -36,6 +37,7 @@ import com.myMovieList.repository.UserRepository;
 import com.myMovieList.service.AuthService;
 import com.myMovieList.service.MovieApiService;
 import com.myMovieList.service.MovieService;
+import com.myMovieList.service.VoteService;
 
 @RestController
 @RequestMapping("/movie-list")
@@ -55,6 +57,9 @@ public class MovieListController {
 
 	@Autowired
 	private MovieService movieService;
+	
+	@Autowired
+	private VoteService voteService;
 
 	@GetMapping
 	public ResponseEntity<?> getList(HttpServletRequest request,
@@ -90,7 +95,7 @@ public class MovieListController {
 	}
 
 	@PostMapping
-	public ResponseEntity<?> addMovie(@RequestBody @Valid MovieIdDto form, HttpServletRequest request)
+	public ResponseEntity<?> addMovie(@RequestBody @Valid MovieAddDto form, HttpServletRequest request)
 			throws HandledException {
 
 		MovieApiDto apiMovie = apiService.getMovieById(form.getId());
@@ -100,10 +105,29 @@ public class MovieListController {
 		movieService.verifyMovieInTheList(movieTitle, request);
 
 		Movie movie = movieService.getOrCreateMovie(movieTitle, apiMovie);
+		
+		voteService.addVote(movie,form.getVote(), request);
 
 		User user = movieService.updateMovieList(request, movie);
 
 		return ResponseEntity.ok(user.getMovies());
+	}
+	
+	@PatchMapping("/vote")
+	public ResponseEntity<Movie> changeNote(@RequestBody @Valid VoteAddDto form, HttpServletRequest request)
+			throws HandledException {
+
+		Optional<Movie> movieOptional = movieRepo.findById(form.getMovieId());
+
+		if (!movieOptional.isPresent()) {
+			throw new HandledException("Movie is not on the list", 400);
+		}
+
+		Movie movie = movieOptional.get();
+
+		voteService.addVote(movie, form.getVote(), request);
+
+		return ResponseEntity.ok(movie);
 	}
 
 	@PatchMapping("/private-list")
@@ -118,7 +142,7 @@ public class MovieListController {
 	}
 
 	@DeleteMapping
-	public ResponseEntity<?> deleteMovie(@RequestBody @Valid MovieIdDto form, HttpServletRequest request) {
+	public ResponseEntity<?> deleteMovie(@RequestBody @Valid MovieAddDto form, HttpServletRequest request) {
 
 		User user = loggingService.getUserByRequest(request);
 		
