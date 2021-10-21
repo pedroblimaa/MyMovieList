@@ -28,8 +28,19 @@ public class VoteService {
 	@Autowired
 	private VoteRepository voteRepo;
 
+	public VoteService() {
+		super();
+	}
+
+	public VoteService(AuthService loggingService, UserRepository userRepo, VoteRepository voteRepo) {
+		super();
+		this.loggingService = loggingService;
+		this.userRepo = userRepo;
+		this.voteRepo = voteRepo;
+	}
+
 	@Transactional
-	private Vote saveVote(Movie movie, User user, Float voteValue) {
+	public Vote saveVote(Movie movie, User user, Float voteValue) {
 
 		Optional<Vote> voteOptional = voteRepo.findByMovieAndUser(movie, user);
 
@@ -53,20 +64,20 @@ public class VoteService {
 		if (movieVote == null) {
 			return;
 		}
-		
-		if(movieVote > 10) {
-			throw new HandledException("Max note is 10", 400);
+
+		if (movieVote > 10 || movieVote < 0) {
+			throw new HandledException("Vote must be between 0 and 10", 400);
 		}
 
 		Long userId = loggingService.getLoggedUserId(request);
 		User user = userRepo.getById(userId);
-		
+
 		this.saveVote(movie, user, movieVote);
-		
+
 		Long movieId = movie.getId();
 		Long voteCount = voteRepo.getVoteCount(movieId);
 
-		movie.setVote_average(voteRepo.getVoteSum(movieId)/voteCount);
+		movie.setVote_average(voteRepo.getVoteSum(movieId) / voteCount);
 		movie.setVote_count(voteCount);
 	}
 
