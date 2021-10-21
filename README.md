@@ -9,7 +9,7 @@
 ##### Run the command `docker-compose -f docker-compose.mysql.yml`
 
 ### 3. Create the .jar of the project
-#### Open another tab of the terminal and run the command `mvn clean package`
+#### Open another tab of the terminal, go into the project folder again and run the command `mvn clean package`
 ##### If you don't have maven installed, download it here: https://maven.apache.org/download.cgi
 
 ### 4. Build the project
