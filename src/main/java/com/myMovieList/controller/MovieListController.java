@@ -104,7 +104,7 @@ public class MovieListController {
 
 		movieService.verifyMovieInTheList(movieTitle, request);
 
-		Movie movie = movieService.getOrCreateMovie(movieTitle, apiMovie);
+		Movie movie = movieService.getOrCreateMovie(apiMovie);
 		
 		voteService.addVote(movie,form.getVote(), request);
 
@@ -117,13 +117,9 @@ public class MovieListController {
 	public ResponseEntity<Movie> changeNote(@RequestBody @Valid VoteAddDto form, HttpServletRequest request)
 			throws HandledException {
 
-		Optional<Movie> movieOptional = movieRepo.findById(form.getMovieId());
-
-		if (!movieOptional.isPresent()) {
-			throw new HandledException("Movie is not on the list", 400);
-		}
-
-		Movie movie = movieOptional.get();
+		MovieApiDto apiMovie = apiService.getMovieById(form.getMovieId());
+		
+		Movie movie = movieService.getOrCreateMovie(apiMovie);
 
 		voteService.addVote(movie, form.getVote(), request);
 

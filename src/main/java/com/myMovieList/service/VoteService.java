@@ -76,8 +76,9 @@ public class VoteService {
 
 		Long movieId = movie.getId();
 		Long voteCount = voteRepo.getVoteCount(movieId);
-
-		movie.setVote_average(voteRepo.getVoteSum(movieId) / voteCount);
+		Float voteAverage = voteRepo.getVoteSum(movieId) / voteCount;
+		
+		movie.setVote_average(((float) Math.round(voteAverage*10))/10);
 		movie.setVote_count(voteCount);
 	}
 

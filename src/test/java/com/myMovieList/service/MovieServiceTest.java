@@ -39,13 +39,11 @@ class MovieServiceTest {
 	@Test
 	void shouldReturnANewMovie_WhenTheMovieDoesntExist() {
 
-		String title = "Movie 1";
-
 		MovieApiDto movieApi = new MovieApiDto(1, "Movie 1", "This is a movie", "en", 7.6, 1400, "2020-04-34");
 
 		MovieService movieService = new MovieService(movieRepo);
 
-		Movie movie = movieService.getOrCreateMovie(title, movieApi);
+		Movie movie = movieService.getOrCreateMovie(movieApi);
 
 		assertEquals(movieApi.getTitle(), movie.getName());
 		assertEquals(movieApi.getOverview(), movie.getOverview());
@@ -54,15 +52,13 @@ class MovieServiceTest {
 	@Test
 	void shouldGetTheMovie_WhenTheMovieExists() {
 
-		String title = "Movie 1";
-
 		MovieApiDto movieApi = new MovieApiDto(1, "Movie 1", "This is a movie", "en", 7.6, 1400, "2020-04-34");
 		Movie movieToBeSaved = new Movie(movieApi);
 		em.persist(movieToBeSaved);
 
 		MovieService movieService = new MovieService(movieRepo);
 
-		Movie movie = movieService.getOrCreateMovie(title, movieApi);
+		Movie movie = movieService.getOrCreateMovie(movieApi);
 
 		assertEquals(movieApi.getTitle(), movie.getName());
 		assertEquals(movieApi.getOverview(), movie.getOverview());

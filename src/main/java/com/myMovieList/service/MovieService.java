@@ -43,16 +43,16 @@ public class MovieService {
 		this.userRepo = userRepo;
 	}
 
-	public Movie getOrCreateMovie(String title, MovieApiDto apiMovie) {
+	public Movie getOrCreateMovie(MovieApiDto apiMovie) {
 
-		Optional<Movie> movieOptional = movieRepo.findByName(title);
+		Optional<Movie> movieOptional = movieRepo.findByName(apiMovie.getTitle());
 
 		Movie movie;
 
 		if (movieOptional.isPresent()) {
 			return movieOptional.get();
 		}
-		
+
 		movie = new Movie(apiMovie);
 
 		movieRepo.save(movie);
@@ -94,7 +94,7 @@ public class MovieService {
 	public List<Movie> deleteMovie(Long id, User user) {
 
 		List<Movie> movies = user.getMovies();
-		
+
 		for (int i = 0; i < movies.size(); i++) {
 			if (movies.get(i).getId().equals(id)) {
 				movies.remove(i);
