@@ -4,6 +4,7 @@ import javax.validation.ConstraintViolationException;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
 
+import org.springframework.data.mongodb.UncategorizedMongoDbException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -52,5 +53,11 @@ public class ValidationErrorHandler {
 	public ErrorHandleDto typeHandle(HttpMessageNotReadableException exception) {
 
 		return new ErrorHandleDto("Invalid data format", 400);
+	}
+
+	@ExceptionHandler(UncategorizedMongoDbException.class)
+	public ErrorHandleDto typeHandle(UncategorizedMongoDbException exception) {
+
+		return new ErrorHandleDto("Database is not connected", 503);
 	}
 }
