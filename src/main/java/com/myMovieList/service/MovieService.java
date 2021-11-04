@@ -6,15 +6,15 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.myMovieList.config.exception.HandledException;
 import com.myMovieList.controller.dto.MovieApiDto;
 import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
 import com.myMovieList.repository.MovieRepository;
 import com.myMovieList.repository.UserRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MovieService {

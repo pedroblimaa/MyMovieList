@@ -2,8 +2,12 @@ package com.myMovieList.controller;
 
 import javax.validation.Valid;
 
+import com.myMovieList.config.exception.HandledException;
+import com.myMovieList.config.security.TokenService;
+import com.myMovieList.controller.dto.LoginDto;
+import com.myMovieList.controller.dto.TokenDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,11 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.myMovieList.config.dto.ErrorHandleDto;
-import com.myMovieList.config.security.TokenService;
-import com.myMovieList.controller.dto.LoginDto;
-import com.myMovieList.controller.dto.TokenDto;
 
 @RestController
 @RequestMapping("/auth")
@@ -30,7 +29,7 @@ public class AuthenticationController {
 	private TokenService tokenService;
 
 	@PostMapping
-	public ResponseEntity<?> authenticate(@RequestBody @Valid LoginDto form) {
+	public ResponseEntity<TokenDto> authenticate(@RequestBody @Valid LoginDto form) throws HandledException {
 
 		UsernamePasswordAuthenticationToken loginData = new UsernamePasswordAuthenticationToken(form.getEmail(),
 				form.getPassword());
@@ -41,8 +40,7 @@ public class AuthenticationController {
 
 			return ResponseEntity.ok(new TokenDto("Bearer", token));
 		} catch (AuthenticationException e) {
-			return new ResponseEntity<ErrorHandleDto>(new ErrorHandleDto("Invalid Credentials!", 400),
-					HttpStatus.BAD_REQUEST);
+			throw new HandledException("Invalid Credentials!", 400);
 		}
 
 	}

@@ -5,16 +5,15 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.config.exception.HandledException;
 import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
 import com.myMovieList.model.Vote;
 import com.myMovieList.repository.UserRepository;
 import com.myMovieList.repository.VoteRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class VoteService {
@@ -77,8 +76,8 @@ public class VoteService {
 		Long movieId = movie.getId();
 		Long voteCount = voteRepo.getVoteCount(movieId);
 		Float voteAverage = voteRepo.getVoteSum(movieId) / voteCount;
-		
-		movie.setVote_average(((float) Math.round(voteAverage*10))/10);
+
+		movie.setVote_average(((float) Math.round(voteAverage * 10)) / 10);
 		movie.setVote_count(voteCount);
 	}
 

@@ -15,7 +15,7 @@ public class Movie {
 	@Column(length = 1000)
 	private String overview;
 	private String language;
-	private String releaseDate;
+	private String release_date;
 	private Float vote_average = (float) 0;
 	private Long vote_count = (long) 0; 
 
@@ -29,26 +29,26 @@ public class Movie {
 		this.name = movieApi.getTitle();
 		this.overview = movieApi.getOverview();
 		this.language = movieApi.getOriginal_language();
-		this.releaseDate = movieApi.getRelease_date();
+		this.release_date = movieApi.getRelease_date();
 	}
 	
-	public Movie(Integer id, String name, String overview, String language, String releaseDate) {
+	public Movie(Integer id, String name, String overview, String language, String release_date) {
 		super();
 		this.id = (long) id;
 		this.name = name;
 		this.overview = overview;
 		this.language = language;
-		this.releaseDate = releaseDate;
+		this.release_date = release_date;
 	}
 
-	public Movie(Long id, String name, String overview, String language, String releaseDate, float vote_average,
+	public Movie(Long id, String name, String overview, String language, String release_date, float vote_average,
 			Long vote_count) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.overview = overview;
 		this.language = language;
-		this.releaseDate = releaseDate;
+		this.release_date = release_date;
 		this.vote_average = vote_average;
 		this.vote_count = vote_count;
 	}
@@ -87,12 +87,12 @@ public class Movie {
 		this.language = language;
 	}
 
-	public String getReleaseDate() {
-		return releaseDate;
+	public String getRelease_date() {
+		return release_date;
 	}
 
-	public void setReleaseDate(String releaseDate) {
-		this.releaseDate = releaseDate;
+	public void setRelease_date(String release_date) {
+		this.release_date = release_date;
 	}
 
 	public Float getVote_average() {
