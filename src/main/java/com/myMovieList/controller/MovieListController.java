@@ -39,9 +39,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+
 @Validated
 @RestController
-@RequestMapping("/movie-list")
+@RequestMapping(value = "/movie-list", produces = "application/json")
 public class MovieListController {
 
 	@Autowired
@@ -65,9 +70,14 @@ public class MovieListController {
 	@Autowired
 	private ValidateQueryParamsService validateParams;
 
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve"),
+			@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
+			@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Sort by a specific field") })
+	@ApiOperation(value = "Get the user's movie list")
 	@GetMapping
 	public ResponseEntity<Page<Movie>> getList(HttpServletRequest request,
-			@PageableDefault(page = 0, size = 10) Pageable pagination) throws HandledException {
+			@ApiIgnore @PageableDefault(page = 0, size = 10) Pageable pagination) throws HandledException {
 
 		validateParams.validatePagination(pagination, new Movie());
 
@@ -78,9 +88,14 @@ public class MovieListController {
 		return ResponseEntity.ok(movies);
 	}
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve"),
+		@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
+		@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Sort by a specific field") })
+	@ApiOperation(value = "Get a movie list from another user")
 	@GetMapping("/user")
 	public ResponseEntity<Page<Movie>> getAnotherList(@RequestParam @Min(1) Long id,
-			@PageableDefault(page = 0, size = 10) Pageable pagination) throws HandledException {
+			@ApiIgnore @PageableDefault(page = 0, size = 10) Pageable pagination) throws HandledException {
 
 		validateParams.validatePagination(pagination, new Movie());
 
@@ -101,6 +116,7 @@ public class MovieListController {
 		return ResponseEntity.ok(movies);
 	}
 
+	@ApiOperation(value = "Add a movie to your list")
 	@PostMapping
 	public ResponseEntity<List<Movie>> addMovie(@RequestBody @Valid MovieAddDto form, HttpServletRequest request)
 			throws HandledException {
@@ -120,6 +136,7 @@ public class MovieListController {
 		return ResponseEntity.ok(user.getMovies());
 	}
 
+	@ApiOperation(value = "Change your rating about a movie")
 	@PatchMapping("/vote")
 	public ResponseEntity<Movie> changeNote(@RequestBody @Valid VoteAddDto form, HttpServletRequest request)
 			throws HandledException {
@@ -133,6 +150,7 @@ public class MovieListController {
 		return ResponseEntity.ok(movie);
 	}
 
+	@ApiOperation(value = "Change your list private/not")
 	@PatchMapping("/private-list")
 	@Transactional
 	public ResponseEntity<UserDto> setPrivateList(HttpServletRequest request, @RequestBody PrivateListDto form) {
@@ -144,6 +162,7 @@ public class MovieListController {
 		return ResponseEntity.ok(new UserDto(user));
 	}
 
+	@ApiOperation(value = "Remove a movie from your list")
 	@DeleteMapping
 	public ResponseEntity<List<Movie>> deleteMovie(@RequestBody @Valid MovieAddDto form, HttpServletRequest request) {
 

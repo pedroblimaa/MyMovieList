@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(value = "/auth", produces = "application/json")
 public class AuthenticationController {
 
 	@Autowired
@@ -28,6 +30,7 @@ public class AuthenticationController {
 	@Autowired
 	private TokenService tokenService;
 
+	@ApiOperation(value = "Route to log into the application")
 	@PostMapping
 	public ResponseEntity<TokenDto> authenticate(@RequestBody @Valid LoginDto form) throws HandledException {
 

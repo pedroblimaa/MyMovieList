@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @Validated
-@RequestMapping("/movies")
+@RequestMapping(value = "/movies", produces = "application/json")
 public class TheMovieDbApiController {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
@@ -35,6 +37,7 @@ public class TheMovieDbApiController {
 	@Autowired
 	private LoggingService loggingService;
 
+	@ApiOperation(value = "Return movies from the external API")
 	@Cacheable(value = "apiMovies")
 	@GetMapping
 	public ResponseEntity<List<MovieApiDto>> listTopRated(@RequestParam(defaultValue = "1") @Min(1) Integer page,

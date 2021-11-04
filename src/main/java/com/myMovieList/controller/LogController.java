@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
-@RequestMapping("/log")
+@RequestMapping(value = "/log", produces = "application/json")
 @EnableMongoRepositories(basePackageClasses = LogMongoRepository.class)
 public class LogController {
 	
@@ -28,8 +33,13 @@ public class LogController {
 	@Autowired
 	private ValidateQueryParamsService validateParams;
 
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve"),
+		@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
+		@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Sort by a specific field") })
+	@ApiOperation(value = "Return the saved logs")
 	@GetMapping
-	public ResponseEntity<Page<LogMongo>> getLogs(Pageable pagination) throws HandledException{
+	public ResponseEntity<Page<LogMongo>> getLogs(@ApiIgnore Pageable pagination) throws HandledException{
 
 		validateParams.validatePagination(pagination, new LogMongo());
 		
