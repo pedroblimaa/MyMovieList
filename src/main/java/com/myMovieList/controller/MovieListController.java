@@ -77,7 +77,7 @@ public class MovieListController {
 	@ApiOperation(value = "Get the user's movie list")
 	@GetMapping
 	public ResponseEntity<Page<Movie>> getList(HttpServletRequest request,
-			@ApiIgnore @PageableDefault(page = 0, size = 10) Pageable pagination) throws HandledException {
+			@ApiIgnore @PageableDefault(page = 0, size = 12) Pageable pagination) throws HandledException {
 
 		validateParams.validatePagination(pagination, new Movie());
 
@@ -95,7 +95,7 @@ public class MovieListController {
 	@ApiOperation(value = "Get a movie list from another user")
 	@GetMapping("/user")
 	public ResponseEntity<Page<Movie>> getAnotherList(@RequestParam @Min(1) Long id,
-			@ApiIgnore @PageableDefault(page = 0, size = 10) Pageable pagination) throws HandledException {
+			@ApiIgnore @PageableDefault(page = 0, size = 12) Pageable pagination) throws HandledException {
 
 		validateParams.validatePagination(pagination, new Movie());
 

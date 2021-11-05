@@ -30,7 +30,8 @@ public class AppExceptionHandler {
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	public ResponseEntity<ErrorHandleDto> typeHandle(MethodArgumentTypeMismatchException exception) {
 
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto(exception.getName() + ": invalid data type", 400));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+				.body(new ErrorHandleDto(exception.getName() + ": invalid data type", 400));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -60,17 +61,19 @@ public class AppExceptionHandler {
 	@ExceptionHandler(JDBCConnectionException.class)
 	public ResponseEntity<ErrorHandleDto> typeHandle(JDBCConnectionException exception) {
 
-		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorHandleDto("Error with database connection", 502));
+		return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+				.body(new ErrorHandleDto("Error with database connection", 502));
 	}
 
 	@ExceptionHandler(AuthenticationException.class)
 	public ResponseEntity<ErrorHandleDto> typeHandle(AuthenticationException exception) {
 
-		if(exception.getMessage().contains("Bad credentials")) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto("Invalid Credentials!", 400));
+		if (exception.getMessage().contains("Bad credentials")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto("Invalid Credentials", 400));
 		}
-	
-		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorHandleDto("Error with database connection", 502));
+
+		return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+				.body(new ErrorHandleDto("Error with database connection", 502));
 	}
 
 }
