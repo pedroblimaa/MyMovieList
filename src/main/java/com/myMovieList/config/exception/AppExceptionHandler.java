@@ -1,14 +1,13 @@
 package com.myMovieList.config.exception;
 
-import javax.servlet.ServletException;
 import javax.validation.ConstraintViolationException;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
 
-import org.springframework.data.mongodb.UncategorizedMongoDbException;
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -22,19 +21,19 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class AppExceptionHandler {
 
 	@ExceptionHandler(ConstraintViolationException.class)
-	public ErrorHandleDto handle(ConstraintViolationException exception) {
+	public ResponseEntity<ErrorHandleDto> handle(ConstraintViolationException exception) {
 
-		return new ErrorHandleDto(exception.getMessage(), 400);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto(exception.getMessage(), 400));
 	}
 
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
-	public ErrorHandleDto typeHandle(MethodArgumentTypeMismatchException exception) {
+	public ResponseEntity<ErrorHandleDto> typeHandle(MethodArgumentTypeMismatchException exception) {
 
-		return new ErrorHandleDto(exception.getName() + ": invalid data type", 400);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto(exception.getName() + ": invalid data type", 400));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ErrorHandleDto typeHandle(MethodArgumentNotValidException exception) {
+	public ResponseEntity<ErrorHandleDto> typeHandle(MethodArgumentNotValidException exception) {
 
 		String message = "";
 
@@ -42,25 +41,25 @@ public class AppExceptionHandler {
 			message += error.getField() + " " + error.getDefaultMessage();
 		}
 
-		return new ErrorHandleDto(message, 400);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto(message, 400));
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
-	public ErrorHandleDto typeHandle(MissingServletRequestParameterException exception) {
+	public ResponseEntity<ErrorHandleDto> typeHandle(MissingServletRequestParameterException exception) {
 
-		return new ErrorHandleDto(exception.getMessage(), 400);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto(exception.getMessage(), 400));
 	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
-	public ErrorHandleDto typeHandle(HttpMessageNotReadableException exception) {
+	public ResponseEntity<ErrorHandleDto> typeHandle(HttpMessageNotReadableException exception) {
 
-		return new ErrorHandleDto("Invalid data format", 400);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto("Invalid data format", 400));
 	}
 
-	@ExceptionHandler(UncategorizedMongoDbException.class)
-	public ErrorHandleDto typeHandle(UncategorizedMongoDbException exception) {
+	@ExceptionHandler(JDBCConnectionException.class)
+	public ResponseEntity<ErrorHandleDto> typeHandle(JDBCConnectionException exception) {
 
-		return new ErrorHandleDto("Database is not connected", 503);
+		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorHandleDto("Error with database connection", 502));
 	}
 
 }

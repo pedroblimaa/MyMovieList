@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -28,8 +30,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/movies", produces = "application/json")
 public class TheMovieDbApiController {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
-			.getLog(TheMovieDbApiController.class);
+	private static final Log log = LogFactory.getLog(TheMovieDbApiController.class);
 
 	@Autowired
 	private MovieApiService apiService;
@@ -60,11 +61,11 @@ public class TheMovieDbApiController {
 				name != null ? "Caching request with name: " + name : "Caching top_rated movies request");
 		log.info(loggingMessage);
 
-		if(movies == null) {
+		if (movies == null) {
 			log.error(loggingService.log("ERROR", "Error on access to API: movies is null"));
 			throw new HandledException("Movie search is unavailable", 502);
 		}
-		
+
 		return ResponseEntity.ok(movies.getResults());
 	}
 }

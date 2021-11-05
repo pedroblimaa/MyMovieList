@@ -27,5 +27,4 @@ public class AuthenticationService implements UserDetailsService {
 
 		throw new UsernameNotFoundException("Invalid Data!");
 	}
-
 }
