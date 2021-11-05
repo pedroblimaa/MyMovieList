@@ -1,5 +1,31 @@
-# myMovieList
+<h1 align="middle"> MyMovieList 
+  <br>
+  <p align="middle"> 
+    <img src="https://img.shields.io/badge/-Java-orange?style=for-the-badge&logo=java&logoColor=white"></img> 
+    <img src="https://img.shields.io/badge/-Swagger-green?style=for-the-badge&logo=swagger&logoColor=white"></img>
+    <img src="https://img.shields.io/badge/-MySQL-blue?style=for-the-badge&logo=mysql&logoColor=white"></img>
+  </p>
+</h1>
 
+## 📝API Requirements
+### Must Have
+- [x] Comunicar com uma API externa (desenvolvida pelo colaborador ou por terceiros)
+- [x] Persistir dados num BD relacional (não relacional é "nice to have")
+- [x] Uso de um design pattern aderente ao Spring Boot/Java
+- [x] Criar alguns unit tests de algumas classes desenvolvidas
+- [x] Criar testes funcionais de alguns requisitos desenvolvidos (por exemplo usando o banco H2)
+- [x] Testes de integração são bem vindos (usando um ambiente “real” com MySQL)
+- [x] Criar a imagem docker da aplicação para a execução em containers
+
+### Nice to Have
+- [x] Organização do código
+- [x] Logging
+- [x] Segurança (ex: JWT)
+- [x] Cache
+- [x] Incluir alguma operação que grave informações em um banco NoSQL, por exemplo, um log de eventos
+
+## ⚙️ Set Up
+  
 ### 1. Clone The Repository 
 #### Open the terminal in folder in your computer to download and run the following command: 
 `git clone https://github.com/pedroblimaa/MyMovieList.git`
@@ -18,5 +44,22 @@
 
 ### 5. Now just run the project 
 #### Run `docker-compose up`
-#### And there we go, the application is up and runnning 
+#### And there we go, the application is up and runnning
+
+## 📚 Design Patterns
+
+### MVC 
+Modelo padrão, muito usado para API's por sua facilidade e organização
+
+### DTO
+Padrão usado para devolver dados ao cliente e receber, com a facilidade de receber e passar só os parametrôs necessários
+
+### Controller -> Service -> Repository
+Ajuda na organização e leitura do código, pois determina um padrão de chamada
+
+## 📃 Documentation
+`localhost:8081/swagger-ui/`
+
+
+
 
