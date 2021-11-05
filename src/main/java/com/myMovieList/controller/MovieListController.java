@@ -89,9 +89,9 @@ public class MovieListController {
 	}
 
 	@ApiImplicitParams({
-		@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve"),
-		@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
-		@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Sort by a specific field") })
+			@ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve"),
+			@ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page"),
+			@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Sort by a specific field") })
 	@ApiOperation(value = "Get a movie list from another user")
 	@GetMapping("/user")
 	public ResponseEntity<Page<Movie>> getAnotherList(@RequestParam @Min(1) Long id,

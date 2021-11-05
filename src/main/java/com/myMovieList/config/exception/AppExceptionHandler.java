@@ -1,5 +1,6 @@
-package com.myMovieList.config.validation;
+package com.myMovieList.config.exception;
 
+import javax.servlet.ServletException;
 import javax.validation.ConstraintViolationException;
 
 import com.myMovieList.config.dto.ErrorHandleDto;
@@ -7,6 +8,7 @@ import com.myMovieList.config.dto.ErrorHandleDto;
 import org.springframework.data.mongodb.UncategorizedMongoDbException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.CannotCreateTransactionException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -17,7 +19,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @RestControllerAdvice
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class ValidationErrorHandler {
+public class AppExceptionHandler {
 
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ErrorHandleDto handle(ConstraintViolationException exception) {
@@ -60,4 +62,5 @@ public class ValidationErrorHandler {
 
 		return new ErrorHandleDto("Database is not connected", 503);
 	}
+
 }
