@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,14 +36,10 @@ public class AuthenticationController {
 		UsernamePasswordAuthenticationToken loginData = new UsernamePasswordAuthenticationToken(form.getEmail(),
 				form.getPassword());
 
-		try {
-			Authentication authentication = authManager.authenticate(loginData);
-			String token = tokenService.generateToken(authentication);
+		Authentication authentication = authManager.authenticate(loginData);
+		String token = tokenService.generateToken(authentication);
 
-			return ResponseEntity.ok(new TokenDto("Bearer", token));
-		} catch (AuthenticationException e) {
-			throw new HandledException("Invalid Credentials!", 400);
-		}
+		return ResponseEntity.ok(new TokenDto("Bearer", token));
 
 	}
 }

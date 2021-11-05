@@ -1,7 +1,6 @@
 package com.myMovieList.config.security;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -13,11 +12,9 @@ import com.myMovieList.config.dto.ErrorHandleDto;
 import com.myMovieList.controller.TheMovieDbApiController;
 import com.myMovieList.model.User;
 import com.myMovieList.repository.UserRepository;
-import com.myMovieList.service.LoggingService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,10 +24,6 @@ public class TokenAuthentication extends OncePerRequestFilter {
 
 	private TokenService tokenService;
 	private UserRepository repository;
-
-	@Autowired
-	private LoggingService loggingService;
-
 
 	private static final Log log = LogFactory.getLog(TheMovieDbApiController.class);
 
@@ -54,16 +47,14 @@ public class TokenAuthentication extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 		} catch (Exception e) {
 
-			log.error(loggingService.log("ERROR", "Error with database connection"));
+			log.error("Error with database connection");
 
 			String jsonString = new ObjectMapper()
 					.writeValueAsString(new ErrorHandleDto("Error with database connection", 502));
-			PrintWriter out = response.getWriter();
 			response.setStatus(HttpStatus.BAD_GATEWAY.value());
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			out.print(jsonString);
-			out.flush();
+			response.getWriter().print(jsonString);
 		}
 	}
 

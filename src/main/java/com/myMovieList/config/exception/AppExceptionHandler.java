@@ -8,6 +8,7 @@ import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -59,6 +60,16 @@ public class AppExceptionHandler {
 	@ExceptionHandler(JDBCConnectionException.class)
 	public ResponseEntity<ErrorHandleDto> typeHandle(JDBCConnectionException exception) {
 
+		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorHandleDto("Error with database connection", 502));
+	}
+
+	@ExceptionHandler(AuthenticationException.class)
+	public ResponseEntity<ErrorHandleDto> typeHandle(AuthenticationException exception) {
+
+		if(exception.getMessage().contains("Bad credentials")) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorHandleDto("Invalid Credentials!", 400));
+		}
+	
 		return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new ErrorHandleDto("Error with database connection", 502));
 	}
 
