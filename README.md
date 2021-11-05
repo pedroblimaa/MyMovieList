@@ -1,11 +1,11 @@
 <h1 align="middle"> MyMovieList 
   <br>
   <p align="middle"> 
-    <img src="https://img.shields.io/badge/-Java-orange?style=for-the-badge&logo=java&logoColor=white"/>
-    <img src="https://img.shields.io/badge/-MySQL-blue?style=for-the-badge&logo=mysql&logoColor=white"/>
-    <img src="https://img.shields.io/badge/-mongodb-green?style=for-the-badge&logo=mongodb&logoColor=white"/>
-    <img src="https://img.shields.io/badge/-JWT-green?style=for-the-badge&logo=json web tokens&logoColor=white"/>
-    <img src="https://img.shields.io/badge/-Swagger-green?style=for-the-badge&logo=swagger&logoColor=white"/>
+    <img src="https://img.shields.io/badge/-Java-rgb(229, 108, 16)?style=for-the-badge&logo=java&logoColor=white"/>
+    <img src="https://img.shields.io/badge/-MySQL-rgb(68, 121, 161)?style=for-the-badge&logo=mysql&logoColor=white"/>
+    <img src="https://img.shields.io/badge/-mongodb-rgb(71, 162, 72)?style=for-the-badge&logo=mongodb&logoColor=white"/>
+    <img src="https://img.shields.io/badge/-JWT-rgb(20, 20, 20)?style=for-the-badge&logo=json web tokens&logoColor=white"/>
+    <img src="https://img.shields.io/badge/-Swagger-rgb(133, 234, 45)?style=for-the-badge&logo=swagger&logoColor=black"/>
   </p>
   <img src="https://img.shields.io/github/last-commit/pedroblimaa/MyMovieList?style=for-the-badge"></p>
 </h1>
