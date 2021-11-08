@@ -1,6 +1,8 @@
-package com.myMovieList.service;
+package com.myMovieList.unit.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import com.myMovieList.service.MovieApiService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

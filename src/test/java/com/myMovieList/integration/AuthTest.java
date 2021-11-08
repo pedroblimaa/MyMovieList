@@ -39,7 +39,7 @@ public class AuthTest {
 				ErrorHandleDto.class);
 
 		assertEquals(400, response.getBody().getCode());
-		assertEquals("Invalid Credentials!", response.getBody().getMessage());
+		assertEquals("Invalid Credentials", response.getBody().getMessage());
 	}
 
 	@Test

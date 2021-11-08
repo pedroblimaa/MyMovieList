@@ -4,12 +4,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.myMovieList.controller.dto.LoginDto;
+import com.myMovieList.controller.dto.MovieApiDto;
+import com.myMovieList.controller.dto.TokenDto;
+import com.myMovieList.controller.dto.UserDto;
+
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -22,10 +29,6 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
-
-import com.myMovieList.controller.dto.LoginDto;
-import com.myMovieList.controller.dto.TokenDto;
-import com.myMovieList.controller.dto.UserDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations = "classpath:application-test.properties")
@@ -122,6 +125,67 @@ public class MovieListTest {
 
 		assertEquals("mod@mail.com", response.getEmail());
 		assertFalse(response.getPrivateList());
+	}
+
+	@Test
+	public void shouldReturnMoviesWithTheName_WhenSearchingForItToApiSearch() {
+
+		headers = new HttpHeaders();
+
+		String authHeader = getAuthHeader();
+
+		headers.add("Authorization", authHeader);
+
+		HttpEntity<String> request = new HttpEntity<>(headers);
+
+		ResponseEntity<MovieApiDto[]> response = testRestTemplate.exchange("/movies?name=Megamind", HttpMethod.GET,
+				request, MovieApiDto[].class);
+
+		MovieApiDto[] movies = response.getBody();
+
+		for (MovieApiDto movie : movies) {
+			assertTrue(movie.getTitle().contains("Megamind"));
+		}
+	}
+
+	@ParameterizedTest
+	// 1 - sould return empty list _ when searching for a movie that does not exist
+	// 2 - should return a full list _ when no parameter is given
+	// 3 - should return a full list _ when not existing parameter is given
+	@CsvSource({ "?name=Medaminddusiahduia, 0", "'', 20", "?invalidParameter=invalidValue, 20" })
+	void shouldReturnANumberOfMovies_WhenSearchByDeterminedParam(String param, int expected) {
+
+		headers = new HttpHeaders();
+
+		String authHeader = getAuthHeader();
+
+		headers.add("Authorization", authHeader);
+
+		HttpEntity<String> request = new HttpEntity<>(headers);
+
+		ResponseEntity<MovieApiDto[]> response = testRestTemplate.exchange("/movies" + param, HttpMethod.GET, request,
+				MovieApiDto[].class);
+
+		MovieApiDto[] movies = response.getBody();
+
+		assertEquals(expected, movies.length);
+	}
+
+	@Test
+	public void shouldReturnCode400_WhenInvalidPageIsProvidedToApiSearch() {
+
+		headers = new HttpHeaders();
+
+		String authHeader = getAuthHeader();
+
+		headers.add("Authorization", authHeader);
+
+		HttpEntity<String> request = new HttpEntity<>(headers);
+
+		ResponseEntity<String> response = testRestTemplate.exchange("/movies?page=0", HttpMethod.GET, request,
+				String.class);
+
+		assertTrue(response.getBody().contains("400"));
 	}
 
 	private String getAuthHeader() {

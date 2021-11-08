@@ -37,7 +37,7 @@ class AuthenticationControllerTest {
 		
 		JSONObject jsonResponse = new JSONObject();
 		jsonResponse.put("code", 400);
-		jsonResponse.put("message", "Invalid Credentials!");
+		jsonResponse.put("message", "Invalid Credentials");
 		
 		mockMvc.perform(MockMvcRequestBuilders.post(uri).content(json).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().is(400))

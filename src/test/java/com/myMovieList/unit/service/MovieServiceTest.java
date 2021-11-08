@@ -1,4 +1,4 @@
-package com.myMovieList.service;
+package com.myMovieList.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,6 +21,8 @@ import com.myMovieList.model.Movie;
 import com.myMovieList.model.User;
 import com.myMovieList.repository.MovieRepository;
 import com.myMovieList.repository.UserRepository;
+import com.myMovieList.service.AuthService;
+import com.myMovieList.service.MovieService;
 
 @DataJpaTest
 @ActiveProfiles("test")
