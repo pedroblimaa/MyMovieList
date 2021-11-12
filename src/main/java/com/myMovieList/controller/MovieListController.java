@@ -105,7 +105,7 @@ public class MovieListController {
 
 		// verify if id and username are present
 		if ((id != null && username != null) || (id == null && username == null)) {
-			throw new HandledException("Invalid request, you can serach only by id, or only by username", 400);
+			throw new HandledException("Invalid request, you can search only by id, or only by username", 400);
 		}
 
 		Optional<User> user = id == null ? userRepo.findByEmail(username) : userRepo.findById(id);
