@@ -44,6 +44,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import springfox.documentation.annotations.ApiIgnore;
+
 @CrossOrigin(origins = "http://localhost:4200")
 
 @Validated
@@ -96,15 +97,22 @@ public class MovieListController {
 			@ApiImplicitParam(name = "sort", dataType = "string", paramType = "query", value = "Sort by a specific field") })
 	@ApiOperation(value = "Get a movie list from another user")
 	@GetMapping("/user")
-	public ResponseEntity<Page<Movie>> getAnotherList(@RequestParam @Min(1) Long id,
+	public ResponseEntity<Page<Movie>> getAnotherList(@RequestParam(required = false) @Min(1) Long id,
+			@RequestParam(required = false) String username,
 			@ApiIgnore @PageableDefault(page = 0, size = 12) Pageable pagination) throws HandledException {
 
 		validateParams.validatePagination(pagination, new Movie());
 
-		Optional<User> user = userRepo.findById(id);
+		// verify if id and username are present
+		if ((id != null && username != null) || (id == null && username == null)) {
+			throw new HandledException("Invalid request", 400);
+		}
+
+		Optional<User> user = id == null ? userRepo.findByEmail(username) : userRepo.findById(id);
 
 		if (!user.isPresent()) {
 			throw new HandledException("User not found", 404);
+
 		}
 
 		Boolean privateList = user.get().getPrivateList();
@@ -113,7 +121,7 @@ public class MovieListController {
 			throw new HandledException("The list is private", 403);
 		}
 
-		Page<Movie> movies = movieRepo.getMoviesByUserId(id, pagination);
+		Page<Movie> movies = movieRepo.getMoviesByUserId(user.get().getId(), pagination);
 
 		return ResponseEntity.ok(movies);
 	}
